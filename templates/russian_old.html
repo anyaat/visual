@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+  {% block content %}
+
+    <div id="single-vis">
+      <div class="row text-center">
+        {% if not result %}
+        <h1>Explore a particular word in Russian or English model</h1>
+        {% endif %}
+      </div>
+      <div class="form">
+        <form class="form-inline" method="POST" action="/russian/">
+          <p class="model">
+            {{ form.model }} {{ form.model.label }}
+          </p>
+          <input type="submit" value="Choose" class="button orange">
+          <button type="submit" class="btn btn-default">Go</button>
+        </form>
+      </div>
+
+
+<!--         <form class="form-inline" method="POST" action="/russian/">
+          <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Please select</span>
+                    <select name="comp_select" class="selectpicker form-control">
+                      <option value="ruscorpora">ruscorpora</option>
+                      <option value="bnc">bnc</option>
+                    </select>
+            </div>
+            <button type="submit" class="btn btn-default">Go</button>
+          </div>
+        </form> -->
+
+<!--         <h2>Graph visualization of a given word associates based on distribution semantic models</h2>
+        <p>Type your query word with part of speech tag:</p>
+          <div id="queryform">
+            <form id="inputform" action="#" method=post>
+              <div class="form-group">
+                {% if word %}
+                <input type="text" class="typeahead" id="query" name="query" value="{{ word }}" maxlength=100>
+                {% else %}
+                <input type="text" class="typeahead" id="query" name="query" placeholder="apple_SUBST" maxlength=100>
+                {% endif %}
+              </div>
+              <button type="submit" class="btn btn-primary" id="send" name="query" value="submit">Submit!</button>
+            </form>
+          </div>
+          
+        {% if error %}
+          <p> {{ error }}</p>
+        {% endif %}
+
+
+
+        {% if model == 'ruscorpora' %}
+          {% if result %}
+            <div>
+              <div class="col-md-6">
+                <h3><strong>Words related to <a href="http://127.0.0.1:5000/russian/{{ word+'_'+pos }}"><i>{{ word }}</i></a> <small>({{ pos }})</small> in the Ruscorpora</strong></h3>
+                <ol>
+                {% for reslt in result if not "No results" in reslt and reslt != "Incorrect tag!" and not 'is unknown' in reslt %}
+                <li>
+                <strong><a href="http://127.0.0.1:5000/russian/word/{{ reslt[1] }}/">{{ reslt[1].split('_')[0] }} - {{ reslt[0] }}</a></strong>
+                </li>
+                {% endfor %}
+                </ol>
+                {% if 'is unknown' in result[0] %}
+                  <i>{{ result[0] }}</i>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                {% if imagePath %}
+                  <img src="{{ url_for('static', filename=imagePath) }}" style="width:304px;height:228px;">name</img>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% else %}
+          {% if result %}
+            <div>
+              <div class="col-md-6">
+                <h3><strong>Words related to <a href="http://127.0.0.1:5000/russian/{{ word }}"><i>{{ word }}</i></a> in the BNC corpus</strong></h3>
+                <ol>
+                {% for reslt in result if not "No results" in reslt and reslt != "Incorrect tag!" and not 'is unknown' in reslt %}
+                <li>
+                <strong><a href="http://127.0.0.1:5000/russian/word/{{ reslt[1] }}/">{{ reslt[1] }} - {{ reslt[0] }}</a></strong>
+                </li>
+                {% endfor %}
+                </ol>
+                {% if 'is unknown' in result[0] %}
+                  <i>{{ result[0] }}</i>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                {% if imagePath %}
+                  <img src="{{ url_for('static', filename=imagePath) }}" style="width:304px;height:228px;">name</img>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %} -->
+
+<!-- 
+      </div> -->
+    </div>
+
+  {% endblock %}

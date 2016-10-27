@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+	{% block content %}
+    <div id="home-sec">  <!--HOME SECTION-->   
+	    <div class="container"  >
+	        <div class="row text-center">
+	            <div  class="col-md-12" >
+	                <span class="head-main">SEMANTIC VISUALIZATION</span>
+	            </div>
+	            <h3>"Visualizations put ideas into our heads..."</h3>
+	            <div  class="col-md-12" >
+	                <span class="head-last">online visualization of distributional semantic models</span>
+	                <div class="quote">
+					<!--<blockquote>
+				          <p>Visualizations put ideas into our heads...</p>
+				          	<footer>Chris Culy</footer>
+				        </blockquote> -->
+			        </div>
+	            </div>
+	        </div>
+	    </div>
+
+		<div class="container">
+		<div class="row home-col">        
+		    <div class="col-md-4">
+		      <h2>Word2vec Russain</h2>
+		      <p>Use the word2vec model trained on the Russian National Corpus to explore the associates graph of the word of your interest.</p>
+		      <a href="http://127.0.0.1:5000/russian" class="btn btn-info btn-md" role="button">Try it out!</a>
+		    </div>     
+		    <div class="col-md-4">
+		      <h2>Ajax and Celery</h2>
+		      <p>Its neither semantics, nor visualization. You can just input a word and get its 10 most frequent bigrams.</p>
+		      <a href="#http://127.0.0.1:5000/ajax" class="btn btn-info btn-md" role="button">Try it out!</a>
+		    </div>
+		    <div class="col-md-4">
+		      <h2>Word2vec English</h2>
+		      <p>Use the word2vec model trained on the British National Corpus to explore the associates graph of the word of your interest.</p>
+		      <a href="http://127.0.0.1:5000/english" class="btn btn-info btn-md" role="button">Try it out!</a>
+		    </div>   
+		</div>  
+
+	    <div id="footer">
+	        HSE Computational linguistics | 2016
+    	</div>
+
+      </div>
+    </div>
+ 
+    {% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+  {% block content %}
+
+    <div id="home-sec">
+      <div class="container">
+        <div class="container-fluid cut-cont">
+          <div  class="col-md-12" >
+              <span class="head-normal">Explore a graph of a particular Russian word</span>
+          </div>      
+          <div class="row-fluid">
+            <div class="add-m">
+              <h3>Graph visualization of a given word associates based on distribution semantic model. The model was learnt on the Russian National Corpus.</h3>
+            </div>
+            <div class="row-fluid">
+              <div class="col-md-5">
+                <p><strong>Type your query word and its part of speech tag (add '_S' for noun, '_V' for verb, '_A' for adjective):</strong></p>
+                   <div class="add-m" id="queryform">
+                    <form id="inputform" action="http://127.0.0.1:5000/russian/" method=post>
+                      <div class="form-group">
+                        {% if word %}
+                        <input type="text" class="typeahead" id="query" name="query" value="{{ word }}" maxlength=100>
+                        {% else %}
+                        <input type="text" class="typeahead" id="query" name="query" placeholder="мир_S" maxlength=100>
+                        {% endif %}
+                      </div>
+                      <button type="submit" class="btn btn-primary" id="send" name="query" value="submit">Submit!</button>
+                    </form>
+                    {% if error %}
+                      <p> {{ error }}</p>
+                    {% endif %}
+                  </div>
+                <div class="row-fluid">
+                  {% if result %}
+                    <p><strong>Words related to <a class="word" href="http://127.0.0.1:5000/russian/word/{{ word }}"><i>{{ word }}</i></a> in the RNC corpus</strong></p>
+                    <ol>
+                      {% for reslt in result if not "No results" in reslt and reslt != "Incorrect tag!" and not 'is unknown' in reslt %}
+                        <li>
+                        <strong><a class="word" href="http://127.0.0.1:5000/russian/word/{{ reslt[1] }}/">{{ reslt[1].split('_')[0] }} -- {{ reslt[0] }}</a></strong>
+                        </li>
+                      {% endfor %}
+                    </ol>
+                    {% if 'is unknown' in result[0] %}
+                      <i>{{ result[0] }}</i>
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+              <div class="col-md-7">
+                {% if imagePath %}
+                  <div class="portfolio-item">
+                      <div class="item-main">
+                          <div class="portfolio-image">
+                              <img src="{{ url_for('static', filename=imagePath) }}" alt="">
+                              <div class="overlay">
+                                  <a class="preview btn btn-danger" title="Click to zoom" href="{{ url_for('static', filename=imagePath) }}"><i class=" fa fa-eye"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div id="footer">
+            HSE Computational linguistics | 2016
+        </div>
+      </div>
+    </div>
+
+  {% endblock %} 
