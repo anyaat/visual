@@ -1,7 +1,0 @@
-from flask_wtf import Form
-from wtforms import SubmitField, SelectField
-
-
-class VehicleForm(Form):
-    lang = SelectField('', choices=())
-    model = SelectField('', choices=())
