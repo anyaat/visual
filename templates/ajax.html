@@ -23,21 +23,29 @@
                   <label class="sr-only" for="wordInput">Some word</label>
                   <input type="text" class="form-control" id="wordInput" placeholder="Word">
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
               </form>
               <br>
               <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
               <div id="success"></div>
               <div id="error-alert" class="alert alert-danger" role="alert" style="display:none;"></div>
             </div>
-
           </div>
-        </div>
-<!--         <div id="footer">
-            HSE Computational linguistics | 2016
-        </div> -->
-    </div>
 
+          <h3>Click to start celery task for the word 'президент'.</h3>
+          <div class="container">
+            <button id="start-bg-job" class="btn btn-primary">Start!</button><br><br>
+            <div id="progress"></div>
+            <div id="finished"></div>
+          </div>
+
+        </div>
+
+      <div id="footer">
+          HSE Computational linguistics | 2016
+      </div>      
+
+    </div>
   </div>
 
   {% endblock %} 

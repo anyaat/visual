@@ -42,6 +42,52 @@ $(document).ready(function() {
 
 });
 
+
+function start_long_task() {
+    div = $('<div class="progress"><div></div><div>0%</div><div>***</div><div>&nbsp;</div></div><hr>');
+    $('#progress').append(div);
+    var nanobar = new Nanobar({
+        bg: '#44f',
+        target: div[0].childNodes[0]
+    });
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/longtask',
+        success: function(data, status, request) {
+            status_url = request.getResponseHeader('Location');
+            update_progress(status_url, nanobar, div[0]);
+        },
+        error: function() {
+            alert('Unexpected error');
+        }
+    });
+}
+function update_progress(status_url, nanobar, status_div) {
+    $.getJSON(status_url, function(data) {
+        percent = parseInt(data['current'] * 100 / data['total']);
+        nanobar.go(percent);
+        $(status_div.childNodes[1]).text(percent + '%');
+        $(status_div.childNodes[2]).text(data['status']);
+        if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
+            if ('result' in data) {
+                $('#finished').html('<h2>The task is done successfully.</h2><p>The result is the following: <ol><li>' + data['result'][0] + '</li><li>' + data['result'][1] + '</li><li>' + data['result'][2] + '</li><li>' + data['result'][3] + '</li><li>' + data['result'][4] + '</li><li>' + data['result'][5] + '</li><li>' + data['result'][6] + '</li><li>' + data['result'][7] + '</li><li>' + data['result'][8] + '</li><li>' + data['result'][9] + '</li></ol></p>');
+            }
+        }
+        else {
+            setTimeout(function() {
+                update_progress(status_url, nanobar, status_div);
+            }, 2000);
+        }
+    });
+}
+
+$(document).ready(function() {
+    $('#start-bg-job').click(start_long_task);
+});
+
+
+
+
 // window.onbeforeunload = function() {
 //     return "Hey there!";
 //  };
