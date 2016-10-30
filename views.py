@@ -4,8 +4,8 @@ import hashlib
 import seaborn as sns 
 import networkx as nx
 import matplotlib.pyplot as plt
-from time import sleep
 from celery import Celery
+from random import choice
 from bigrams import word_bigram
 from itertools import combinations
 from gensim.models import Word2Vec
@@ -43,7 +43,6 @@ model_eng = Word2Vec.load_word2vec_format('bnc.bin', binary=True)
 lemmatize = True
 tag_list = 'S A V ADV'.split()
 #tags_list = 'ADJ VERB SUBST UNC ADV'
-
    
 
 def process_query(userQuery, model_name):
@@ -96,7 +95,6 @@ def russian():
             input_data = request.form['query']
         except:
             return render_template('russian.html', error="Something wrong with your query!")
-
         if input_data.replace('_', '').replace('-', '').isalnum():
             model_name = 'ruscorpora'
             query = process_query(input_data, model_name)
@@ -142,7 +140,6 @@ def english():
             input_data = request.form['query']
         except:
             return render_template('english.html', error="Something wrong with your query!")
-
         if input_data.replace('_', '').replace('-', '').isalnum():
             model_name = 'bnc'
             query = process_query(input_data, model_name)
@@ -196,7 +193,7 @@ def count():
 
 @celery.task(bind=True)
 def long_task(self):
-    input_word = 'президент'
+    input_word = choice(['президент', 'мир', 'путешествие', 'спектакль', 'компания'])
     bigrams = word_bigram(input_word)
     total = len(bigrams)
     results = []
@@ -212,9 +209,9 @@ def long_task(self):
                                 'total': total,
                                 'status': message})
         time.sleep(5)
-
+    final = [input_word] + [results]
     return {'current': 100, 'total': 100, 'status': 'Task completed!',
-            'result': results}
+            'result': final}
 
 
 @app.route('/ajax/longtask', methods=['POST'])

@@ -4,7 +4,19 @@ var words = new Bloodhound({
   prefetch: 'https://raw.githubusercontent.com/anyaat/webdev-practice/master/2016/bnc_vocab.json'
 });
 
-$('#queryform .typeahead').typeahead(null, {
+$('#query-form-english.typeahead').typeahead(null, {
+  name: 'words',
+  source: words
+});
+
+
+var words = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  prefetch: 'https://raw.githubusercontent.com/anyaat/webdev-practice/master/2016/ruscorpora_vocab.json'
+});
+
+$('#query-form-russian.typeahead').typeahead(null, {
   name: 'words',
   source: words
 });
@@ -70,7 +82,7 @@ function update_progress(status_url, nanobar, status_div) {
         $(status_div.childNodes[2]).text(data['status']);
         if (data['state'] != 'PENDING' && data['state'] != 'PROGRESS') {
             if ('result' in data) {
-                $('#finished').html('<h2>The task is done successfully.</h2><p>The result is the following: <ol><li>' + data['result'][0] + '</li><li>' + data['result'][1] + '</li><li>' + data['result'][2] + '</li><li>' + data['result'][3] + '</li><li>' + data['result'][4] + '</li><li>' + data['result'][5] + '</li><li>' + data['result'][6] + '</li><li>' + data['result'][7] + '</li><li>' + data['result'][8] + '</li><li>' + data['result'][9] + '</li></ol></p>');
+                $('#finished').html('<h2>The task is done successfully.</h2><p>The result for the word "' + data['result'][0] + '" is the following: <ol><li>' + data['result'][1][0] + '</li><li>' + data['result'][1][1] + '</li><li>' + data['result'][1][2] + '</li><li>' + data['result'][1][3] + '</li><li>' + data['result'][1][4] + '</li><li>' + data['result'][1][5] + '</li><li>' + data['result'][1][6] + '</li><li>' + data['result'][1][7] + '</li><li>' + data['result'][1][8] + '</li><li>' + data['result'][1][9] + '</li></ol></p>');
             }
         }
         else {
